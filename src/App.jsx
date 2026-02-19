@@ -24,6 +24,8 @@ const mockData = [
 
 function reducer(state, action) {
   switch(action.type) {
+    case "INIT":
+      return action.data
     case "CREATE":
       return [action.data, ...state]
     case "UPDATE":
@@ -40,6 +42,9 @@ function reducer(state, action) {
   }
 }
 
+export const DiaryStateContext = createContext()
+export const DiaryDispatchContext = createContext()
+
 function App() {
   const [data, dispatch] = useReducer(reducer, mockData)
   const idRef = useRef(3)
@@ -50,7 +55,8 @@ function App() {
       type: 'INIT',
       data: mockData
     })
-    
+
+    setIsDataLoaded(true)
   }, [])
 
 
@@ -85,18 +91,22 @@ function App() {
     })
   }
 
+  if(!isDataLoaded) return <div>로딩중</div>
+
   return (
     <div>
-      <button onClick={()=>onCreate(new Date().getTime(), 4, 'hello')}>일기 추가하기</button>
-      <button onClick={()=>onUpdate(1, new Date().getTime(), 4, '1번 수정')}>일기 수정하기</button>
-      <button onClick={() =>onDelete(1)}>일기 삭제하기</button>
-      <Routes>
-        <Route path='/' element={<Home/>}/>
-        <Route path='/new' element={<New/>}/>
-        <Route path='/edit/:id' element={<Edit/>}/>
-        <Route path='/diary/:id' element={<Diary/>}/>
-        <Route path='*' element={<NotFound/>}/>
-      </Routes>
+      <DiaryStateContext.Provider value={data}>
+        <DiaryDispatchContext.Provider value={{onCreate, onUpdate, onDelete}}>
+
+          <Routes>
+            <Route path='/' element={<Home/>}/>
+            <Route path='/new' element={<New/>}/>
+            <Route path='/edit/:id' element={<Edit/>}/>
+            <Route path='/diary/:id' element={<Diary/>}/>
+            <Route path='*' element={<NotFound/>}/>
+          </Routes>
+        </DiaryDispatchContext.Provider>
+      </DiaryStateContext.Provider>
     </div>
   )
 }
