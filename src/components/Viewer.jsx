@@ -4,6 +4,7 @@ import { emotionList } from '../util/constants'
 import { getEmotionImage } from '../util/getEmotionImage'
 
 const Viewer = ({emotionId,content}) => {
+
     const emotionItem = emotionList.findIndex(
         (item)=>String(item.emotionId)===String(emotionId)
     )

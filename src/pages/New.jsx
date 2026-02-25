@@ -4,10 +4,13 @@ import Header from '../components/Header'
 import Editor from '../components/Editor'
 import Button from '../components/Button'
 import { DiaryDispatchContext } from '../App'
+import useTitle from '../hooks/useTitle'
 
 const New = () => {
   const nav = useNavigate()
   const {onCreate} = useContext(DiaryDispatchContext)
+
+  useTitle('감정 일기 쓰기')
 
   const onSubmit = (input) => {
     onCreate(

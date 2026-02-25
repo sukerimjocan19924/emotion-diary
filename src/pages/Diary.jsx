@@ -5,12 +5,14 @@ import Button from '../components/Button'
 import Viewer from '../components/Viewer'
 import { getStringedDate } from '../util/getStringedDate'
 import useDiary from '../hooks/useDiary'
+import useTitle from '../hooks/useTitle'
 
 const Diary = () => {
     const {id} = useParams()
     const nav = useNavigate()
 
     const curDiaryItem = useDiary({id})
+    useTitle(`${id}번의 일기 보기`)
 
     if (!curDiaryItem) {
       return <div>불러오는 중 ...</div>
@@ -28,7 +30,7 @@ const Diary = () => {
         title={title}
         rightChild={<Button
                       text={'수정하기'}
-                      onClick={() => nav(`/edit/{id}`)}
+                      onClick={() => nav(`/edit/${id}`)}
                       type={'POSITIVE'}/>}/>
       <Viewer emotionId={emotionId} content={content}/>
     </div>

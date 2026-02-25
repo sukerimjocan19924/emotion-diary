@@ -5,6 +5,8 @@ import Button from '../components/Button'
 import Editor from '../components/Editor'
 import { DiaryDispatchContext,DiaryStateContext } from '../App'
 import useDiary from '../hooks/useDiary'
+import useTitle from '../hooks/useTitle'
+
 const Edit = () => {
   const { id } = useParams()
   const nav = useNavigate()
@@ -13,7 +15,7 @@ const Edit = () => {
 
   const curDiaryItem=useDiary({id})
 
-
+  useTitle(`${id}번 일기 수정하기`)
 
 
 
