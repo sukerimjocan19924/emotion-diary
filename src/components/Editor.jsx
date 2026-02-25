@@ -4,7 +4,7 @@ import Button from './Button'
 import EmotionItem from './EmotionItem'
 import { useNavigate } from 'react-router-dom'
 import { getStringedDate } from '../util/getStringedDate'
-import { emotionList } from '../util/constants'
+import { emotionList } from '../util/constantsMy'
 
 const Editor = ({initData, onSubmit}) => {
     const nav = useNavigate()

@@ -1,6 +1,6 @@
 import React from 'react'
 import "./EmotionItem.css"
-import { getEmotionImage } from '../util/getEmotionImage'
+import { getEmotionImage } from '../util/getEmotionImageMy1'
 
 const EmotionItem = ({emotionId, emotionName, isSelected, onClick}) => {
   return (

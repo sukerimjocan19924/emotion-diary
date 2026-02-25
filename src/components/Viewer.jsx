@@ -1,7 +1,7 @@
 import React from 'react'
 import "./Viewer.css"
 import { emotionList } from '../util/constants'
-import { getEmotionImage } from '../util/getEmotionImage'
+import { getEmotionImage } from '../util/getEmotionImageMy1'
 
 const Viewer = ({emotionId,content}) => {
 

@@ -14,13 +14,15 @@
     align-items: center;
     border-radius: 5px;
     cursor: pointer;
+    overflow: hidden;
 }
 
 .img-section img {
-    width: 50%;
+    /* width: 50%; */
+    height: 110%;
 }
 
-.img-section.bg-1 {
+/* .img-section.bg-1 {
     background-color: rgb(100, 201, 100);
 }
 
@@ -38,6 +40,30 @@
 
 .img-section.bg-5 {
     background-color: rgb(253, 86, 95);
+} */
+
+.img-section.bg-1 {
+    background-color: rgb(253, 215, 46);
+}
+
+.img-section.bg-2 {
+    background-color: rgb(254, 152, 191);
+}
+
+.img-section.bg-3 {
+    background-color: rgb(22, 139, 133);
+}
+
+.img-section.bg-4 {
+    background-color: rgb(247, 79, 79);
+}
+
+.img-section.bg-5 {
+    background-color: rgb(174, 127, 173);
+}
+
+.img-section.bg-6 {
+    background-color: rgb(117, 194, 214);
 }
 
 .info-section {
