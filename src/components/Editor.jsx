@@ -7,7 +7,6 @@ import { getStringedDate } from '../util/getStringedDate'
 import { emotionList } from '../util/constants'
 
 const Editor = ({initData, onSubmit}) => {
-    const emotionId=3
     const nav = useNavigate()
     
     const [input, setInput] = useState({
@@ -16,14 +15,14 @@ const Editor = ({initData, onSubmit}) => {
         content: ""
     })
 
-    useEffect(() => {
-        if (initData) {
-            setInput({
-                ...initData,
-                createdDate: new Date(Number(initData.createdDate))
-            })
+    useEffect(()=>{
+        if(initData){
+        setInput({
+            ...initData,
+            createdDate:new Date(initData.createdDate)
+        })
         }
-    }, [initData])
+    },[initData])
 
     const onChangeInput = (e) => {
         let name = e.target.name

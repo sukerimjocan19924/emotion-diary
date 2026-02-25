@@ -11,13 +11,13 @@ const DiaryItem = ({id, content, createdDate, emotionId}) => {
   return (
     <div className='DiaryItem'>
         <div
-            onClick={()=>nav(`/diart/${id}`)} 
+            onClick={()=>nav(`/diary/${id}`)} 
             className={`img-section bg-${emotionId}`}>
             <img src={getEmotionImage(emotionId)} alt="icon" />
         </div>
 
         <div
-            onClick={()=>nav(`/diart/${id}`)}
+            onClick={()=>nav(`/diary/${id}`)}
             className="info-section">
             <div className="crated-date">{new Date(createdDate).toLocaleDateString()}</div>
             <div className="content">{content}</div>
