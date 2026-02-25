@@ -1,0 +1,85 @@
+.Viewer>section {
+    text-align: center;
+    margin-bottom: 50px;
+
+}
+
+.Viewer>section h4 {
+    font-size: 22px;
+    padding: 10px 0
+}
+
+.emotion-img-wrapper {
+    width: 250px;
+    /* height: 250px; */
+    height: 312px;
+    margin: auto;
+    align-content: center;
+    color: #fff;
+    border-radius: 10px;
+    font-size: 25px;
+}
+
+.emotion-img-wrapper img {
+    height: 100%;
+}
+
+/* .emotion-img-wrapper.img-1 {
+    background-color: rgb(100, 201, 100);
+}
+
+.emotion-img-wrapper.img-2 {
+    background-color: rgb(157, 215, 114);
+}
+
+.emotion-img-wrapper.img-3 {
+    background-color: rgb(253, 206, 23);
+}
+
+.emotion-img-wrapper.img-4 {
+    background-color: rgb(253, 132, 70);
+}
+
+.emotion-img-wrapper.img-5 {
+    background-color: rgb(253, 86, 95);
+} */
+
+.emotion-img-wrapper.img-1 {
+    color: white;
+    background-color: rgb(249, 230, 146);
+}
+
+.emotion-img-wrapper.img-2 {
+    color: white;
+    background-color: rgb(250, 199, 218);
+}
+
+.emotion-img-wrapper.img-3 {
+    color: white;
+    background-color: rgb(134, 192, 189);
+}
+
+.emotion-img-wrapper.img-4 {
+    color: white;
+    background-color: rgb(253, 132, 70)
+}
+
+.emotion-img-wrapper.img-5 {
+    color: white;
+    background-color: rgb(210, 186, 209);
+}
+
+.emotion-img-wrapper.img-6 {
+    color: white;
+    background-color: rgb(181, 220, 230);
+}
+
+
+.content-wrapper {
+    background-color: #fafafa;
+    padding: 20px;
+    font-size: 20px;
+    min-height: 100px;
+    text-align: left;
+    border-radius: 10px;
+}

@@ -1,68 +1,97 @@
-import { useReducer, useRef, useState, createContext, useEffect } from 'react'
+
 import './App.css'
-import { Route, Routes } from 'react-router-dom'
+import { useReducer, useRef, createContext, useEffect, useState } from 'react'
+import { Routes, Route } from 'react-router-dom'
 import Diary from './pages/Diary'
 import Edit from './pages/Edit'
 import Home from './pages/Home'
+import Notfound from './pages/Notfound'
 import New from './pages/New'
-import NotFound from './pages/NotFound'
-
-const mockData = [
-  {
-    id: 1,
-    createdDate: new Date().getTime(),
-    emotionId: 1,
-    content: '1번 일기의 내용'
-  },
-  {
-    id: 2,
-    createdDate: new Date().getTime(),
-    emotionId: 3,
-    content: '2번 일기의 내용'
-  }
-]
 
 function reducer(state, action) {
-  switch(action.type) {
+  let nextState;
+
+  switch (action.type) {
     case "INIT":
       return action.data
     case "CREATE":
-      return [action.data, ...state]
+      nextState = [action.data, ...state]
+      break;
     case "UPDATE":
-      return state.map((item)=>
-        String(item.id) === String(action.data.id) ? action.data : item
+      nextState = state.map((item) =>
+        String(item.id) === String(action.data.id) ?
+          action.data
+          : item
       )
+      break;
     case "DELETE":
-      return state.filter(
-        (item)=>String(item.id)!==String(action.id)
+      nextState = state.filter(
+        (item) => String(item.id) !== String(action.id)
       )
-
+      break
     default:
       return state
   }
+  localStorage.setItem('diary', JSON.stringify(nextState))
+
+  return nextState
+
 }
 
 export const DiaryStateContext = createContext()
 export const DiaryDispatchContext = createContext()
-
 function App() {
-  const [data, dispatch] = useReducer(reducer, mockData)
-  const idRef = useRef(3)
-  const [isDataLoaded, setIsDataLoaded] = useState(false)
 
-  useEffect(()=>{
-    dispatch({
-      type: 'INIT',
-      data: mockData
+  const [data, dispatch] = useReducer(reducer, [])
+  const idRef = useRef(0)
+  const [loading, setLoading] = useState(true)
+
+  useEffect(() => {
+
+    const storedData = localStorage.getItem('diary')
+
+    if (!storedData) {
+      localStorage.setItem('diary', JSON.stringify([]))
+      setLoading(false)
+      return
+    }
+
+    let parsed = []
+
+    try {
+      parsed = JSON.parse(storedData)
+    } catch {
+      localStorage.setItem('diary', JSON.stringify([]))
+      return
+    }
+
+    if (!Array.isArray(parsed)) {
+      setLoading(false)
+      return
+    }
+
+    let maxId = 0;
+    parsed.forEach((item) => {
+      if (Number(item.id) > maxId) {
+        maxId = item.id
+      }
     })
 
-    setIsDataLoaded(true)
+    idRef.current = maxId + 1
+
+    dispatch({
+      type: "INIT",
+      data: parsed
+    })
+
+    setLoading(false)
+
   }, [])
 
-
   const onCreate = (createdDate, emotionId, content) => {
+
     dispatch({
-      type: 'CREATE',
+      type: "CREATE",
       data: {
         id: idRef.current++,
         createdDate,
@@ -71,10 +100,9 @@ function App() {
       }
     })
   }
-
-  const onUpdate=(id, createdDate, emotionId, content)=>{
+  const onUpdate = (id, createdDate, emotionId, content) => {
     dispatch({
-      type: 'UPDATE',
+      type: "UPDATE",
       data: {
         id,
         createdDate,
@@ -84,30 +112,27 @@ function App() {
     })
   }
 
-  const onDelete=(id)=>{
+  const onDelete = (id) => {
     dispatch({
-      type:"DELETE",
+      type: "DELETE",
       id
     })
   }
-
-  if(!isDataLoaded) return <div>로딩중</div>
-
+  if (loading) {
+    return <div>데이터를 불러오는 중입니다.</div>
+  }
   return (
-    <div>
-      <DiaryStateContext.Provider value={data}>
-        <DiaryDispatchContext.Provider value={{onCreate, onUpdate, onDelete}}>
-
-          <Routes>
-            <Route path='/' element={<Home/>}/>
-            <Route path='/new' element={<New/>}/>
-            <Route path='/edit/:id' element={<Edit/>}/>
-            <Route path='/diary/:id' element={<Diary/>}/>
-            <Route path='*' element={<NotFound/>}/>
-          </Routes>
-        </DiaryDispatchContext.Provider>
-      </DiaryStateContext.Provider>
-    </div>
+    <DiaryStateContext.Provider value={data}>
+      <DiaryDispatchContext.Provider value={{ onCreate, onUpdate, onDelete }}>
+        <Routes>
+          <Route path='/' element={<Home />} />
+          <Route path='/new' element={<New />} />
+          <Route path='/edit/:id' element={<Edit />} />
+          <Route path='/diary/:id' element={<Diary />} />
+          <Route path='*' element={<Notfound />} />
+        </Routes>
+      </DiaryDispatchContext.Provider>
+    </DiaryStateContext.Provider>
   )
 }
 
